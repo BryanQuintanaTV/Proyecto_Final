@@ -13,3 +13,12 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ---
 
 The project was made for a final project of the Backend programming subject.
+
+This is the FrontEnd side and it works with the BackEnd Side
+* [API Gateway](https://github.com/BryanQuintanaTV/api_gateway/tree/master)
+* [API REST](https://github.com/BryanQuintanaTV/apirest)
+* [Auth API](https://github.com/BryanQuintanaTV/auth_api)
+* It also works with Redis that is deployed usind docker *
+
+<br><br>
+*Not repository created yet
