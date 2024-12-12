@@ -1,0 +1,1 @@
+CREATE TABLE `u511403479_`.`gramineas` ( `idgraminea` INT(11) NOT NULL AUTO_INCREMENT , `nombrecomun` VARCHAR(100) NOT NULL , `nombrecientifico` VARCHAR(100) NOT NULL , `descripcion` VARCHAR(500) NOT NULL , `imagen` VARCHAR(100) NOT NULL , PRIMARY KEY (`idgraminea`)) ENGINE = InnoDB;

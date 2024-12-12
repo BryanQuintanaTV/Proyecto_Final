@@ -1,0 +1,147 @@
+<div class="card">
+    <p-toast />
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <p-button
+                severity="success" 
+                label="New" 
+                icon="pi pi-plus" 
+                class="mr-2" 
+                (onClick)="openNew()" />
+        </ng-template>
+    </p-toolbar>
+
+    <p-table
+        #dt
+        [value]="products"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name']"
+        [tableStyle]="{ 'min-width': '5rem' }"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="{first} - {last} de {totalRecords} productos"
+        [showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Lista de productos</h5>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name" style="min-width:15rem">
+                    Nombre <p-sortIcon field="name" />
+                </th>
+                <th>
+                    Imagen
+                </th>
+                <th pSortableColumn="price">
+                    Precio <p-sortIcon field="price" />
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    {{ product.name_product }}
+                </td>
+                <td>
+                <img 
+                    [src]="'assets/images/' + product.image_product" 
+                    [alt]="product.name_product" 
+                    width="50" 
+                    class="shadow-4" />
+                </td>
+                <td>
+                    {{ product.price_product | currency : 'MXN' }}
+                </td>
+                <td>
+                    <!-- <p-button 
+                        icon="pi pi-pencil" 
+                        class="mr-2" 
+                        [rounded]="true" 
+                        [outlined]="true" 
+                        severity="success" 
+                        (onClick)="editProduct(product)" /> -->
+                        <i class="pi pi-pencil cursor-pointer mr-5" style="color: #4ca154; font-size: 1.3rem;" (click)="editProduct(product)"></i>
+                    <!-- <p-button 
+                        icon="pi pi-trash" 
+                        severity="danger" 
+                        [rounded]="true" 
+                        [outlined]="true" 
+                        (onClick)="deleteProduct(product)" /> -->
+                    <i class="pi pi-trash cursor-pointer" style="color: red; font-size: 1.3rem" (click)="deleteProduct(product)"></i>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                Total {{ products ? products.length : 0 }} Productos.
+            </div>
+        </ng-template>
+    </p-table>
+
+    <p-dialog 
+        [(visible)]="productDialog" 
+        [style]="{ width: '450px' }" 
+        header="Detalles del producto" 
+        [modal]="true" 
+        styleClass="p-fluid">
+
+            <ng-template pTemplate="content">
+                <img 
+                    [src]="'assets/images/' + product.image_product" 
+                    [alt]="product.image_product" 
+                    class="block m-auto pb-3" 
+                    *ngIf="product.image_product" />
+
+                <div class="field">
+                    <label for="name">Nombre</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="product.name_product" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !product.name_product">
+                        Nombre del producto requerido.
+                    </small>
+                </div>
+
+                <div class="formgrid grid mt-5">
+                    <div class="field col">
+                        <label for="price">Precio</label>
+                        <p-inputNumber 
+                            id="price" 
+                            [(ngModel)]="product.price_product" 
+                            mode="currency" 
+                            currency="MXN" 
+                            locale="es-MX" />
+                    </div>
+                    
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p-button 
+                    class="mr-7 botonFooter"
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    [text]="true" 
+                    (onClick)="hideDialog()" />
+                <p-button
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    [text]="true" 
+                    (onClick)="saveProduct()" />
+            </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{ width: '450px' }" />
+</div>

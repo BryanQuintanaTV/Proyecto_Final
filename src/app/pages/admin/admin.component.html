@@ -1,0 +1,18 @@
+<app-sidebar (valorSeleccionado)="recibirValor($event)"></app-sidebar>
+
+
+@if (valorRecibido == 1) {
+
+    <app-dashboard></app-dashboard>
+
+} @else if (valorRecibido == 2) {
+
+    <app-products></app-products>
+
+} @else if (valorRecibido == 3) {
+
+    <app-orders></app-orders>
+
+} @else if (valorRecibido == 4) {
+    <app-users></app-users>
+}

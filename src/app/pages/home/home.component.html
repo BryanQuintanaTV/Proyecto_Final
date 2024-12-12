@@ -1,0 +1,50 @@
+<div class="m-10 pepe">
+    <div class="max-w-2xl mx-auto px-4">
+        <div class="items-start justify-between sm:flex">
+            <div>
+                <h4 class="text-gray-800 text-xl font-semibold">Equipo #6</h4>
+                <p class="mt-2 text-gray-600 text-base sm:text-sm">Integrantes</p>
+            </div>
+            
+        </div>
+        <ul class="mt-12 divide-y">
+    
+            @for (member of members; track $index) {
+                <li class="py-5 flex items-start justify-between">
+                    <div class="flex gap-3">
+                        <!-- <img src="" class="flex-none w-12 h-12 rounded-full" /> -->
+                        <div>
+                            <span class="block text-sm text-gray-700 font-semibold"> {{member.name}}</span>
+                            <span class="block text-sm text-gray-600"><span class="font-bold"># </span>{{member.numControl}}</span>
+                        </div>
+                    </div>
+                
+                </li>
+            }
+        </ul>
+    </div>
+    
+    
+    <div class="max-w-2xl mx-auto px-4">
+        <ul class="mt-12 divide-y">
+                <li class="py-5 flex items-start justify-between">
+                    <div class="flex gap-3">
+                        <div>
+                            <span class="block text-sm text-gray-700 font-semibold"> Programacón BackEnd</span>
+                            <span class="block text-sm text-gray-600"><span class="font-bold">Docente: </span>Velazquez Portillo Pedro Alberto</span>
+                        </div>
+                    </div>
+                </li>
+        </ul>
+
+        @if (!isAuth) {
+            <div class="m-3 p-4">
+                <a href="/login"><button class="m-2 font-bold rounded-lg text-lg  w-40 h-10 bg-[#2679ff] text-[#ffffff] justify-center">Login</button></a>
+                <a href="/register"><button class="m-2 font-bold rounded-lg text-lg  w-40 h-10 bg-[#7f8ea5] text-[#ffffff] justify-center">Register</button></a>
+            </div>
+        }
+    </div>
+
+    
+
+</div>

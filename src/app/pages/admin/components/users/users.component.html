@@ -1,0 +1,164 @@
+<div class="card">
+    <p-toast />
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <p-button
+                severity="success" 
+                label="New" 
+                icon="pi pi-plus" 
+                class="mr-2" 
+                (onClick)="openNew()" />
+        </ng-template>
+    </p-toolbar>
+
+    <p-table
+        #dt
+        [value]="users"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name']"
+        [tableStyle]="{ 'min-width': '5rem' }"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="{first} - {last} de {totalRecords} usuarios"
+        [showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Lista de Usuarios</h5>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="username" style="min-width:15rem">
+                    Username <p-sortIcon field="username" />
+                </th>
+                <th pSortableColumn="email">
+                    Email <p-sortIcon field="email" />
+                </th>
+                <th>
+                    Admin
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>
+                    {{ user.username }}
+                </td>
+                <td>
+                    {{ user.email}}
+                </td>
+                <td>
+                    {{ user.is_staff }}
+                </td>
+                <td>
+                        <i class="pi pi-pencil cursor-pointer mr-5" style="color: #4ca154; font-size: 1.3rem;" (click)="editUser(user)"></i>
+                    <i class="pi pi-trash cursor-pointer" style="color: red; font-size: 1.3rem" (click)="deleteUser(user)"></i>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                Total {{ users ? users.length : 0 }} Usuarios.
+            </div>
+        </ng-template>
+    </p-table>
+
+    <p-dialog 
+        [(visible)]="userDialog" 
+        [style]="{ width: '450px' }" 
+        header="Detalles del Usuario" 
+        [modal]="true" 
+        styleClass="p-fluid">
+
+            <ng-template pTemplate="content">
+                <img 
+                    [src]="'assets/images/userImage.png'"
+                    [alt]="user" 
+                    class="block m-auto pb-3" 
+                    />
+
+                <div class="field">
+                    <label for="name">Username</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="name" 
+                        [(ngModel)]="user.username" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.username">
+                        Username requerido.
+                    </small>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input 
+                        type="text" 
+                        pInputText 
+                        id="email" 
+                        [(ngModel)]="user.email" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.username">
+                        Email requerido.
+                    </small>
+                </div>
+
+                <div class="field" *ngIf="newUser==true">
+                    <label for="pass">Contraseña</label>
+                    <input 
+                        type="password" 
+                        pInputText 
+                        id="pass" 
+                        [(ngModel)]="user.password" 
+                        required 
+                        autofocus />
+                    <small class="p-error" *ngIf="submitted && !user.username">
+                        Username requerido.
+                    </small>
+                </div>
+
+                <div class="field">
+                    <label for="inventoryStatus">Rol</label>
+                    <p-dropdown 
+                        [(ngModel)]="user.is_staff" 
+                        inputId="inventoryStatus" 
+                        [options]="statuses">
+                            <ng-template pTemplate="selectedItem">
+                                <p-tag 
+                                    [value]="user.is_staff.toUpperCase()"
+                                    [severity]="getSeverity(user.is_staff.toUpperCase())" />
+                            </ng-template>
+                            <ng-template let-option pTemplate="item">
+                                <p-tag 
+                                    [value]="option.is_staff" 
+                                    [severity]="getSeverity(option.is_staff)" />
+                            </ng-template>
+                    </p-dropdown>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p-button 
+                    class="mr-7 botonFooter"
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    [text]="true" 
+                    (onClick)="hideDialog()" />
+                <p-button
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    [text]="true" 
+                    (onClick)="saveUser()" />
+            </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{ width: '450px' }" />
+</div>

@@ -1,0 +1,3 @@
+::ng-deep #buttonRounded p-button{
+    border-radius: 50% !important;
+}

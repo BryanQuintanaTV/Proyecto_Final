@@ -1,0 +1,222 @@
+<p-confirmDialog />
+<p-toast />
+
+@if (isMobile) {
+
+    <div class="buttonRounded fixed bottom-3 right-3 z-50 bg-blue-500 text-white flex items-center justify-center" (click)="sidebarVisible = true" style="border-radius: 50%; width: 60px; height: 60px; cursor: pointer;">
+        <img src="assets/icons/icon_shoppingcart_white.svg" alt="" style="width: 24px; height: 24px;">
+    </div>
+
+
+    <div class="grid grid-cols-1 grid-rows-1 gap-4">
+
+        <div>
+            <div class="card">
+
+                <ng-template pTemplate="header">
+                    <p>HEADER</p>
+                </ng-template>
+        
+                <p-dataView #dv [value]="products" [layout]="'grid'">
+                    <ng-template let-product pTemplate="grid" let-products>
+                        <div class="grid grid-nogutter">
+                            <div class="col-12 sm:col-6 md:col-4 xl:col-6 p-2" *ngFor="let product of products">
+                                <div class="p-4 border-2 surface-border surface-card border-round flex flex-column bg-slate-50">
+                                    <div class="surface-50 flex justify-content-center border-round p-3">
+                                        <div class="relative mx-auto">
+                                            <img class="border-round w-full" [src]="'/assets/images/' + product.image_product" [alt]="product.name_product" style="max-width:150px;" />
+                                            <!-- <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product)"></p-tag> -->
+                                        </div>
+                                    </div>
+                                    <div class="pt-4">
+                                        <div class="flex flex-row justify-content-between align-items-start gap-2">
+                                            <div>
+                                                <div class="text-lg font-medium text-900 mt-1">{{ product.name_product }}</div>
+                                            </div>
+                                            <div class="surface-100 p-1" style="border-radius: 30px">
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-column gap-4 mt-4">
+                                            <span class="text-2xl font-semibold">{{ '$' + product.price_product }}</span>
+                                            <div class="flex gap-3 my-15 mx-10">
+                                                <p-button icon="pi pi-shopping-cart" class="flex-auto md:flex-initial white-space-nowrap" label="Comprar" (click)="onClickBuy(product)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+            </p-dataView>
+        
+            </div>
+        </div>
+    </div>
+
+    <div >
+        <p-sidebar [(visible)]="sidebarVisible" styleClass="w-150">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2">
+                    <img src="/assets/icons/icon_shoppingcart.svg" alt="Shopping cart image">
+                    <span class="font-bold">
+                        Shopping Cart - Orden: #{{OrderNumber}}
+                    </span>
+                </div>
+            </ng-template>
+            
+            <ng-template pTemplate="content">
+                <p>
+                    <p-table [value]="products_selected" [tableStyle]="{ 'max-width': '40rem' }">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Image</th>
+                                <th>Producto</th>
+                                <th style="width: 5rem"></th>
+                            </tr>
+                        </ng-template>
+                        
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>
+                                        <img class="border-round w-full" [src]="'/assets/images/' + product.image_product" [alt]="product.name_product" style="max-width:50px;" />
+        
+                                    </td>
+                                    <td>
+                                        {{ product.name }} <br>
+                                        <span class="font-medium">x</span><span class="italic">{{product.quantity}}</span>
+                                        <span> <span class="font-bold">   $</span>{{product.price}}</span>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            
+                                            <button 
+                                            type="button" 
+                                            pButton 
+                                            severity="danger"
+                                            pRipple 
+                                            (click)="deleteFromCart(product)">
+                                            <img src="assets/icons/icon_trash_white.svg" alt="">
+                                        </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            
+                        
+                    </p-table>
+                </p>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <p class="mb-2 text-center" *ngIf="products_selected.length > 0">Total: ${{newOrder.total_order}}</p>
+                <div *ngIf="products_selected.length > 0">
+                    <p-button class="mx-5" label="Comprar" />
+                    <p-button label="Cancelar" severity="danger" (click)="cancelOrder($event)"/>
+                </div>
+                <div *ngIf="products_selected.length == 0">
+                    <p class="italic font-semibold text-gray-400">Carrito Vacio</p>
+                </div>
+            </ng-template>
+        </p-sidebar>
+    </div>
+
+} @else {
+
+    <div class="grid grid-cols-2 grid-rows-1 gap-4">
+
+        <div>
+            <div class="card overflow-y-auto h-[85vh]">
+        
+                <p-dataView #dv [value]="products" [layout]="'grid'" >
+                    <ng-template let-product pTemplate="grid" let-products>
+                        <div class="grid grid-nogutter">
+                            <div class="col-12 sm:col-6 md:col-4 xl:col-6 p-2" *ngFor="let product of products">
+                                <div class="p-4 border-2 surface-border surface-card border-round flex flex-column bg-slate-50">
+                                    <div class="surface-50 flex justify-content-center border-round p-3">
+                                        <div class="relative mx-auto">
+                                            <img class="border-round w-full" [src]="'/assets/images/' + product.image_product" [alt]="product.name_product" style="max-width:150px;" />
+                                            <!-- <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product)"></p-tag> -->
+                                        </div>
+                                    </div>
+                                    <div class="pt-4">
+                                        <div class="flex flex-row justify-content-between align-items-start gap-2">
+                                            <div>
+                                                <div class="text-lg font-medium text-900 mt-1">{{ product.name_product }}</div>
+                                            </div>
+                                            <div class="surface-100 p-1" style="border-radius: 30px">
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-column gap-4 mt-4">
+                                            <span class="text-2xl font-semibold">{{ '$' + product.price_product }}</span>
+                                            <div class="flex gap-3 my-15 mx-10">
+                                                <p-button (click)="onClickBuy(product)" icon="pi pi-shopping-cart" class="flex-auto md:flex-initial white-space-nowrap" label="Comprar" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+            </p-dataView>
+        
+            </div>
+        </div>
+
+        <div>
+            <div class="card">
+                <p-table [value]="products_selected" [tableStyle]="{ 'min-width': '40rem' }" class="sticky top-0">
+                    <ng-template pTemplate="header">
+                        <p>Orden #<span class="font-bold">{{OrderNumber}}</span></p>
+                        <tr>
+                            <th>Image</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th style="width: 5rem"></th>
+                        </tr>
+                    </ng-template>
+                    
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>
+                                    <img class="border-round w-full" [src]="'/assets/images/' + product.image" [alt]="product.name" style="max-width:50px;" />
+    
+                                </td>
+                                <td>{{ product.name }}</td>
+                                <td>${{ product.price }}</td>
+                                <td>{{ product.quantity }}</td>
+                                <td>
+                                    <div>
+                                        
+                                        <button 
+                                        type="button" 
+                                        pButton 
+                                        severity="danger"
+                                        pRipple 
+                                        (click)="deleteFromCart(product)">
+                                        <img src="assets/icons/icon_trash_white.svg" alt="">
+                                    </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+
+                                <div class="flex" *ngIf="products_selected.length > 0">
+                                    <p-button class="mx-5" label="Comprar" (click)="submitOrder()"/>
+                                    <p-button label="Cancelar" severity="danger" (click)="cancelOrder($event)"/>
+                                    <p class="flex mx-2">Total ${{newOrder.total_order}}</p>
+                                </div>
+                                <div class="flex justify-end mx-10 my-5" *ngIf="products_selected.length == 0">
+                                    <p class="italic font-semibold text-gray-400">Carrito Vacio</p>
+                                </div>
+                            
+                        </ng-template>
+                        
+                </p-table>
+            </div>
+
+        </div>
+    </div>
+
+}

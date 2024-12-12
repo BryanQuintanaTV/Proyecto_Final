@@ -1,0 +1,13 @@
+.svg-image {
+    transform: scale(1.5); /* Escala al 150% del tamaño original */
+    transform-origin: center; /* Escala desde el centro de la imagen */
+}
+
+::ng-deep .p-button {
+    height: 33px;
+    width: 10px;
+    padding: 0px;
+    margin: 0px;
+    border-left: 50px;
+    border-right: 50px
+}

@@ -1,0 +1,9 @@
+:host ::ng-deep .p-dialog .product-image {
+    width: 150px;
+    margin: 0 auto 2rem auto;
+    display: block;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer .p-button.botonFooter {
+    width: 90px !important;
+}

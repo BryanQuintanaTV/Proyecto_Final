@@ -1,0 +1,10 @@
+.footer {
+    background-color: var(--surface-300);
+    color: var(--on-surface-900);
+}
+.listMembers>li::before {
+    content: "\2022";;
+    font-weight: bold;
+    margin-left: -1em;
+    margin-right: 0.3em;
+}

@@ -1,0 +1,13 @@
+::ng-deep .custom-selectbutton .p-button {
+    height: 33px;
+    width: 10px;
+    padding: 0px;
+    margin: 0px;
+    border-left: 50px;
+    border-right: 50px
+}
+
+.custom-messages {
+    height: 150px; /* Ajusta la altura según tus necesidades */
+    overflow-y: auto; /* Permite el desplazamiento si los mensajes exceden la altura */
+  }

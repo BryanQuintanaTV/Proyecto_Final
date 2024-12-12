@@ -1,0 +1,63 @@
+<p-toast />
+
+
+<div class="card">
+    
+    <p class="font-medium text-cyan-900">Total de ordenes: <span class="font-bold">{{styledOrder.length}}</span></p>
+
+    <div *ngFor="let order of styledOrder">
+
+        <div class="mt-10">
+            <div class="max-w-screen-xl mx-auto px-4 md:px-8">
+                <div class="max-w-lg">
+                    <p class="text-gray-600">
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Orden <span class="font-bold">#{{ order.num_orden}}</span></span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha: <span class="font-semibold">{{order.order_date}}</span></span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total: <span class="font-semibold">{{order.total | currency : 'MXN'}}</span></span>
+                    </p>
+                </div>
+                <div class="mt-1 shadow-sm border rounded-lg overflow-x-auto">
+                    <table class="w-full table-auto text-sm text-left">
+                        <thead class="bg-gray-50 text-gray-600 font-medium border-b">
+                            <tr>
+                                <th class="py-3 px-6">Producto</th>
+                                <th class="py-3 px-6">Precio</th>
+                                <th class="py-3 px-6">Cantidad</th>
+                                <th class="py-3 px-6">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 divide-y">
+                                <tr *ngFor="let product of order.products">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{product.name}}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{product.price | currency : 'MXN'}}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">x{{product.quantity}}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{product.amount | currency : 'MXN'}}</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<p-toast  
+    key="connectionError" 
+    position="bottom-center"
+    (onClose)="onReject()" 
+    [baseZIndex]="5000">
+        <ng-template let-message pTemplate="message">
+
+            <div class="flex flex-column align-items-start" style="flex: 1">
+                <div class="flex align-items-center gap-2 mx-5">
+                    
+                    <span class="font-bold text-900">
+                        {{message.detail}}
+                    </span>
+                </div>
+                <p-button class="mx-5" size="small" label="Rententar" (onClick)="onConfirm()" />
+            </div>
+        </ng-template>
+</p-toast>
